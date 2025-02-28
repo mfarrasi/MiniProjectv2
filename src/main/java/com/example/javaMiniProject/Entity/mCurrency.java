@@ -1,27 +1,24 @@
 package com.example.javaMiniProject.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
-import java.security.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
 @Table(name = "m_currency")
 public class mCurrency {
     @Id
-    @Column(name = "currency_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer currencyId;
 
     @Column(name = "currency_name")
     private String currencyName;
 
-//    @Column(name = "created_at")
-//    private Timestamp createdAt;
-//
-//    @Column(name = "updated_at")
-//    private Timestamp updatedAt;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }
