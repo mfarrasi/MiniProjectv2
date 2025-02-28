@@ -7,14 +7,14 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Table(name = "m_status")
-public class mStatus {
+@Table(name = "m_currency")
+public class Currency {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer statusId;
+    private Integer currencyId;
 
-    @Column(name = "status_name")
-    private String statusName;
+    @Column(name = "currency_name")
+    private String currencyName;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

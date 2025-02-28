@@ -10,26 +10,26 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "t_account")
-public class tAccount {
+public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer account_id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private sUser user;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "currency_id")
-    private mCurrency currency;
+    private Currency currency;
 
     private BigDecimal balance;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 
     @OneToMany(mappedBy = "account_from")
-    private List<tTransaction> outgoingTransactions;
+    private List<Transaction> outgoingTransactions;
 
     @OneToMany(mappedBy = "account_to")
-    private List<tTransaction> incomingTransactions;
+    private List<Transaction> incomingTransactions;
 }

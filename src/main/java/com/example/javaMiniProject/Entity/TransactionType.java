@@ -7,27 +7,18 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Table
-public class sUser {
+@Table(name = "m_transaction_type")
+public class TransactionType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userId;
+    private Integer typeId;
 
-    @Column(name = "username")
-    private String username;
-
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "password")
-    private String password;
+    @Column(name = "type_name")
+    private String typeName;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy = "s_user")
-    private List<Account> accounts;
 }

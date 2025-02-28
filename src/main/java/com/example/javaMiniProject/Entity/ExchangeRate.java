@@ -10,7 +10,7 @@ import java.util.Currency;
 @Data
 @Entity
 @Table(name = "t_exchange_rate")
-public class tExchangeRate {
+public class ExchangeRate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer rate_id;

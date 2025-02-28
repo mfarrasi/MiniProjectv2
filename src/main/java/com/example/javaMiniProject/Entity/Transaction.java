@@ -5,41 +5,40 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Currency;
 
 @Entity
 @Data
 @Table(name = "t_transaction")
-public class tTransaction {
+public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer transaction_id;
 
     @ManyToOne
     @JoinColumn(name = "account_from")
-    private tAccount account_from;
+    private Account account_from;
 
     @ManyToOne
     @JoinColumn(name = "account_to")
-    private tAccount account_to;
+    private Account account_to;
 
     @ManyToOne
     @JoinColumn(name = "currency_id")
-    private mCurrency currency;
+    private Currency currency;
 
     private BigDecimal amount;
 
     @ManyToOne
     @JoinColumn(name = "rate_id")
-    private tExchangeRate rate;
+    private ExchangeRate rate;
 
     @ManyToOne
     @JoinColumn(name = "type_id")
-    private mTransactionType type;
+    private TransactionType type;
 
     @ManyToOne
     @JoinColumn(name = "status_id")
-    private mStatus status;
+    private Status status;
 
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
