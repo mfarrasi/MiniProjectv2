@@ -35,5 +35,11 @@ public class User {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
+
+    @Transient
+    private String rc;
+
+    @Transient
+    private String rcDesc;
 }
 

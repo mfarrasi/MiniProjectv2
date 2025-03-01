@@ -16,10 +16,27 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public List<User> getAllUser() { return userService.getAllUser();}
+    public ResponseEntity<User> getAllUser (@RequestBody User request) {
+        User response = request;
+        response = userService.createUser(request);
+        if (response.getRc().equals("0000")) {
+            return ResponseEntity.status(200).body(response);
+        } else {
+            return ResponseEntity.status(404).body(response);
+        }
+    }
+
 
     @GetMapping("/getUser")
-    public User getUserById(int id) { return userService.getUserById(id);}
+    public ResponseEntity getUserById(@RequestBody User request) {
+            User response = request;
+            response = userService.createUser(request);
+        if (response.getRc().equals("0000")){
+            return ResponseEntity.status(200).body(response);
+        } else{
+            return ResponseEntity.status(404).body(response);
+        }
+    }
 
     @PostMapping("/createUser")
     public ResponseEntity<User> create (@RequestBody User request) {

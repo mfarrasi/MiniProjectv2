@@ -23,9 +23,12 @@ public class StatusController {
     @PostMapping("/createUser")
     public ResponseEntity<User> create (@RequestBody User request) {
         User response = request;
-
         response = userService.createUser(request);
+        if (response.getRc().equals("0000")){
+            return ResponseEntity.status(200).body(response);
+        } else{
+            return ResponseEntity.status(404).body(response);
+        }
 
-        return ResponseEntity.ok(response);
     }
 }
