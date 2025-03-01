@@ -32,5 +32,4 @@ public class AccountController {
             @RequestParam BigDecimal balance) {
         return accountService.createAccount(userId, currencyId, balance);
     }
-
 }
