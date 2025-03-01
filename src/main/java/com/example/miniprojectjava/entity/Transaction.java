@@ -30,7 +30,7 @@ public class Transaction {
     @JoinColumn(name = "currency_id", nullable = false)
     private Currency currency;
 
-    @Column(name = "amount", nullable = false)
+    @Column(name = "amount", nullable = false, precision = 20, scale = 10)
     private BigDecimal amount;
 
     @ManyToOne

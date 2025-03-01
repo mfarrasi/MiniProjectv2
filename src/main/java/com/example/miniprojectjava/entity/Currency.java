@@ -26,4 +26,10 @@ public class Currency {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
+
+    public Currency() {}
+
+    public Currency(Integer currencyId) {
+        this.currencyId = currencyId;
+    }
 }

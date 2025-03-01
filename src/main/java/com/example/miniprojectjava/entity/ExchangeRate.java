@@ -26,7 +26,7 @@ public class ExchangeRate {
     @JoinColumn(name = "currency_to", nullable = false)
     private Currency currencyTo;
 
-    @Column(name = "rate", nullable = false)
+    @Column(name = "rate", nullable = false, precision = 20, scale = 10)
     private BigDecimal rate;
 
     @CreationTimestamp

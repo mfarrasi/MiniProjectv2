@@ -1,6 +1,9 @@
 package com.example.miniprojectjava.controller;
 
+import com.example.miniprojectjava.dto.AccountRequestDTO;
 import com.example.miniprojectjava.entity.Account;
+import com.example.miniprojectjava.entity.Currency;
+import com.example.miniprojectjava.entity.User;
 import com.example.miniprojectjava.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,11 +26,15 @@ public class AccountController {
     public Account getAccountById(int id) { return accountService.getAccountById(id);}
 
     @PostMapping("/createAccount")
-    public ResponseEntity<Account> create (@RequestBody Account request) {
-        Account response = request;
+    public ResponseEntity<AccountRequestDTO> create (@RequestBody AccountRequestDTO request) {
 
-        response = accountService.createAccount(request);
-
+        AccountRequestDTO response = request;
+        Account account = new Account();
+        account.setUser(new User(request.getUserId()));
+        account.setCurrency(new Currency(request.getCurrencyId()));
+        account.setBalance(request.getBalance());
+        accountService.createAccount(account);
+//        Account response = accountService.createAccount(account);
         return ResponseEntity.ok(response);
     }
 

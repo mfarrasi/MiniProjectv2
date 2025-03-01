@@ -1,6 +1,8 @@
 package com.example.miniprojectjava.service;
 
 import com.example.miniprojectjava.entity.Account;
+import com.example.miniprojectjava.entity.Currency;
+import com.example.miniprojectjava.entity.User;
 import com.example.miniprojectjava.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,13 @@ public class AccountService {
     public Account createAccount(Account request) {
         Account response = request;
 
-        accountRepository.save(response);
+        Account account = new Account();
+
+        account.setUser(new User(request.getUser().getUserId()));
+        account.setCurrency(new Currency(request.getCurrency().getCurrencyId()));
+        account.setBalance(request.getBalance());
+
+        accountRepository.save(account);
         return response;
     }
 

@@ -26,7 +26,7 @@ public class Account {
     @JoinColumn(name = "currency_id", nullable = false)
     private Currency currency;
 
-    @Column(name = "balance")
+    @Column(name = "balance", precision = 20, scale = 10)
     private BigDecimal balance;
 
     @CreationTimestamp

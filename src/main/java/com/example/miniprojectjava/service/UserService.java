@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -26,5 +27,20 @@ public class UserService {
 
         userRepository.save(response);
         return response;
+    }
+
+    public String login(String username, String password) {
+        Optional<User> optionalUser = userRepository.findByUsername(username);
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+
+            if (user.getPassword().equals(password)) {
+                return "Login Berhasil!";
+            } else {
+                return "Password Salah!";
+            }
+        }
+        return "Username Tidak Ditemukan!";
     }
 }

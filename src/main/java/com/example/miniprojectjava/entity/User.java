@@ -33,4 +33,10 @@ public class User {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
+
+    public User() {}
+
+    public User(Integer userId) {
+        this.userId = userId;
+    }
 }
