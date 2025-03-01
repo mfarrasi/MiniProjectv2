@@ -5,22 +5,37 @@ import com.example.javaMiniProject.repository.CurrencyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 
 public class CurrencyService {
     @Autowired
     CurrencyRepository currencyRepository;
 
-    //Create
+    // CREATE
     public Currency createCurrency(Currency request){
-        Currency response = request;
 
-        currencyRepository.save(response);
+        try{
+            Currency response = request;
+            currencyRepository.save(response);
+            response.setRc("0000");
+            response.setRcDesc("Success");
 
-        return response;
+            return response;
+        }
+        catch (Exception e){
+            Currency response = request;
+            response.setRc("0005");
+            response.setRcDesc("General Error");
+
+            return response;
+
+        }
     }
 
-    //Read
+    // READ
     public Currency getCurrency(String param){
         Currency response = new Currency();
 
@@ -29,7 +44,7 @@ public class CurrencyService {
         return response;
     }
 
-    public Currency getCurrencyByName(String param){
+    public Currency getCurrencyByName(String param) {
         Currency response = new Currency();
 
         response = currencyRepository.findByCurrencyName(param);
@@ -37,5 +52,25 @@ public class CurrencyService {
         return response;
     }
 
-    //Update
+    public List<Currency> getListByCurrencyId(String param){
+        List<Currency> response = new ArrayList<>();
+
+        response = currencyRepository.findAllByCurrencyId(Integer.valueOf(param));
+
+        return response;
+
+    }
+
+    // UPDATE
+    public Currency updateCurrency(Currency param){
+        Currency response = new Currency();
+
+        response = currencyRepository.findById(param.getCurrencyId()).get();
+
+        response.setCurrencyName(param.getCurrencyName());
+
+        response = currencyRepository.save(response);
+
+        return response;
+    }
 }

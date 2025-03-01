@@ -22,4 +22,8 @@ public class TransactionType {
 
     @Column(name = "updated_at")
     private Timestamp updatedAt;
+
+    private String rc;
+
+    private String rcDesc;
 }

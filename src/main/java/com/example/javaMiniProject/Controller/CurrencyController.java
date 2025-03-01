@@ -8,8 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1")
+
 public class CurrencyController {
 
     @Autowired
@@ -26,7 +29,7 @@ public class CurrencyController {
     }
 
     // READ
-    @PostMapping("/getuser")
+    @GetMapping("/getcurrency")
     public ResponseEntity<Currency> getCurrency(@RequestParam String param){
         Currency response = new Currency();
 
@@ -35,7 +38,7 @@ public class CurrencyController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/getuserbyname")
+    @GetMapping("/getCurrencyByName")
     public ResponseEntity<Currency> getCurrencyByName(@RequestParam String param){
         Currency response = new Currency();
 
@@ -44,6 +47,22 @@ public class CurrencyController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/getListByCurrencyId")
+    public ResponseEntity<List<Currency>> getListByCurrencyId(@RequestParam String param){
+
+        List<Currency> response= currencyService.getListByCurrencyId(param);
+
+        return ResponseEntity.ok(response);
+    }
+
     // UPDATE
+    @PutMapping("/updateCurrency")
+    public ResponseEntity<Currency> updateCurrency(@RequestBody Currency request){
+        Currency response = new Currency();
+
+        response = currencyService.updateCurrency(request);
+
+        return ResponseEntity.ok(response);
+    }
 
 }

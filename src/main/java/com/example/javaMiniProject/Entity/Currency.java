@@ -11,7 +11,6 @@ import java.sql.Timestamp;
 public class Currency {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "currency_id")
     private Integer currencyId;
 
@@ -23,4 +22,8 @@ public class Currency {
 
     @Column(name = "updated_at")
     private Timestamp updatedAt;
+
+    private String rc;
+
+    private String rcDesc;
 }
