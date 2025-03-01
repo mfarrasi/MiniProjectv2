@@ -29,32 +29,50 @@ public class AccountService {
     public List<Account> getAccount (Integer param){
         Optional<User> optionalUser = userRepository.findById(param);
         if (optionalUser.isEmpty()) {
-            throw new RuntimeException("User not found");
+            List<Account> responseList = new ArrayList<>();
+            Account response = new Account();
+            response.setRc("0005");
+            response.setRcDesc("User not found");
+            responseList.add(response);
+            return responseList;
         }
-        List<Account> response = new ArrayList<>();
-        response = accountRepository.findByUser_UserId(param);
-        return response;
+        List<Account> responseList = new ArrayList<>();
+        responseList = accountRepository.findByUser_UserId(param);
+        Account response = new Account();
+        response.setRc("0000");
+        response.setRcDesc("Success");
+        responseList.add(response);
+        return responseList;
     }
 
     public Account createAccount (Integer userId, Integer currencyId, BigDecimal balance){
         // Find User
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isEmpty()) {
-            throw new RuntimeException("User not found");
+            Account response = new Account();
+            response.setRc("0005");
+            response.setRcDesc("User not found");
+            return response;
         }
         User user = optionalUser.get();
 
         // Find Currency
         Optional<Currency> optionalCurrency = currencyRepository.findById(currencyId);
         if (optionalCurrency.isEmpty()) {
-            throw new RuntimeException("Currency not found");
+            Account response = new Account();
+            response.setRc("0005");
+            response.setRcDesc("Currency not found");
+            return response;
         }
         Currency currency = optionalCurrency.get();
 
         // Check if Account already exists with the same user id and currency id
         Optional<Account> existingAccount = accountRepository.findByUserAndCurrency(user, currency);
         if (existingAccount.isPresent()) {
-            throw new RuntimeException("Account with user Id and currency Id already exists!");
+            Account response = new Account();
+            response.setRc("0005");
+            response.setRcDesc("Account with user Id and currency Id already exists!");
+            return response;
         }
 
         // Create Account
@@ -62,8 +80,10 @@ public class AccountService {
         account.setUser(user);
         account.setCurrency(currency);
         account.setBalance(balance);
-
-        return accountRepository.save(account);
+        account.setRc("0000");
+        account.setRcDesc("Success");
+        accountRepository.save(account);
+        return account;
     }
 
 
