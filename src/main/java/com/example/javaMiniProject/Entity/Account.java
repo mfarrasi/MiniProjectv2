@@ -1,35 +1,41 @@
 package com.example.javaMiniProject.Entity;
 
+import com.example.javaMiniProject.Entity.Currency;
+import com.example.javaMiniProject.Entity.User;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Date;
 
 @Data
 @Entity
 @Table(name = "t_account")
 public class Account {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer account_id;
+    @Column(name = "account_id")
+    private Integer accountId;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "currency_id")
+    @JoinColumn(name = "currency_id", nullable = false)
     private Currency currency;
 
+    @Column(name = "balance")
     private BigDecimal balance;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
 
-    @OneToMany(mappedBy = "account_from")
-    private List<Transaction> outgoingTransactions;
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private Date createdAt;
 
-    @OneToMany(mappedBy = "account_to")
-    private List<Transaction> incomingTransactions;
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Date updatedAt;
 }

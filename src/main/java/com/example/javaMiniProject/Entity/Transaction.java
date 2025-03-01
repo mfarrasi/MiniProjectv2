@@ -2,44 +2,54 @@ package com.example.javaMiniProject.Entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 
-@Entity
 @Data
+@Entity
 @Table(name = "t_transaction")
 public class Transaction {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer transaction_id;
+    @Column(name = "transaction_id")
+    private Integer transactionId;
 
     @ManyToOne
-    @JoinColumn(name = "account_from")
-    private Account account_from;
+    @JoinColumn(name = "account_from", nullable = false)
+    private Account accountFrom;
 
     @ManyToOne
-    @JoinColumn(name = "account_to")
-    private Account account_to;
+    @JoinColumn(name = "account_to", nullable = false)
+    private Account accountTo;
 
     @ManyToOne
-    @JoinColumn(name = "currency_id")
+    @JoinColumn(name = "currency_id", nullable = false)
     private Currency currency;
 
+    @Column(name = "amount", nullable = false)
     private BigDecimal amount;
 
     @ManyToOne
-    @JoinColumn(name = "rate_id")
+    @JoinColumn(name = "rate_id", nullable = false)
     private ExchangeRate rate;
 
     @ManyToOne
-    @JoinColumn(name = "type_id")
-    private TransactionType type;
+    @JoinColumn(name = "type_id", nullable = false)
+    private TransactionType transactionType;
 
     @ManyToOne
-    @JoinColumn(name = "status_id")
+    @JoinColumn(name = "status_id", nullable = false)
     private Status status;
 
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private Date createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Date updatedAt;
 }

@@ -5,56 +5,44 @@ import com.example.javaMiniProject.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class UserService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
-    public User createUser (User request) {
+    public List<User> getAllUser() {
+        return userRepository.findAll();
+    }
+
+    public User getUserById(int id) {
+        return userRepository.findById(id).get();
+    }
+
+    public User createUser(User request) {
         User response = request;
 
         userRepository.save(response);
-
-        return response;
-
-    }
-    public User getUser (String param) {
-        User response = new User();
-        response = userRepository.findById(Integer.valueOf(param)).get();
-
         return response;
     }
-    public User updateUser (User param) {
-        User response = new User();
+    public String login(String username, String password) {
+        Optional<User> optionalUser = userRepository.findByUsername(username);
 
-        response = userRepository.findById(param.getUserId()).get();
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
 
-        userRepository.save(response);
-
-        return response;
-    }
-    public User deleteUser(String param) {
-
-        try{
-            userRepository.deleteById(Integer.valueOf(param));
-            User response = new User();
-//            response.setRc("0000");
-//            response.setRcDesc("Succcessfully delete user id");
-
-            return response;
-        } catch (Exception e) {
-            User response = new User();
-//            response.setRc("0005");
-//            response.setRcDesc("failed to delete user id");
-
-            return response;
-
-
+            if (user.getPassword().equals(password)) {
+                return "Login Berhasil!";
+            } else {
+                return "Password Salah!";
+            }
         }
-
-
+        return "Username Tidak Ditemukan!";
     }
-
-
 }
+
+
+

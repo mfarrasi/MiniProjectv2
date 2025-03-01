@@ -6,14 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/user")
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
-    @PostMapping("/createuser")
+    @GetMapping
+    public List<User> getAllUser() { return userService.getAllUser();}
+
+    @GetMapping("/getUser")
+    public User getUserById(int id) { return userService.getUserById(id);}
+
+    @PostMapping("/createUser")
     public ResponseEntity<User> create (@RequestBody User request) {
         User response = request;
 
@@ -21,29 +29,11 @@ public class UserController {
 
         return ResponseEntity.ok(response);
     }
-    @GetMapping("/getuser")
-    public ResponseEntity<User> getUser (@RequestParam String param) {
-        User response = new User();
-
-        response = userService.getUser(param);
-
-        return ResponseEntity.ok(response);
-    }
-    @PutMapping("/update")
-    public ResponseEntity<User> updateUser (@RequestBody User request) {
-        User response = new User();
-
-        //get user date
-        response = userService.updateUser(request);
-
-        return ResponseEntity.ok(response);
-    }
-    @DeleteMapping("/delete")
-    public ResponseEntity<User> deleteUser (@RequestParam String param) {
-        User response = new User();
-
-        response = userService.deleteUser(param);
-
-        return ResponseEntity.ok(response);
+    @PostMapping("/login")
+    public String login(
+            @RequestParam String username,
+            @RequestParam String password
+    ) {
+        return userService.login(username, password);
     }
 }
