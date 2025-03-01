@@ -1,5 +1,6 @@
 package com.example.miniprojectjava.controller;
 
+import com.example.miniprojectjava.dto.CurrencyRequestDTO;
 import com.example.miniprojectjava.entity.Currency;
 import com.example.miniprojectjava.entity.ExchangeRate;
 import com.example.miniprojectjava.service.CurrencyService;
@@ -27,10 +28,13 @@ public class CurrencyController {
     }
 
     @PostMapping("/createCurrency")
-    public ResponseEntity<Currency> create (@RequestBody Currency request) {
-        Currency response = request;
+    public ResponseEntity<CurrencyRequestDTO> create (@RequestBody CurrencyRequestDTO request) {
+        CurrencyRequestDTO response = request;
 
-        response = currencyService.createCurrency(request);
+        Currency currency = new Currency();
+        currency.setCurrencyName(request.getCurrencyName());
+
+        currencyService.createCurrency(currency);
 
         return ResponseEntity.ok(response);
     }

@@ -33,7 +33,6 @@ public class UserController {
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
         userService.createUser(user);
-//        response = userService.createUser(request);
 
         return ResponseEntity.ok(response);
     }

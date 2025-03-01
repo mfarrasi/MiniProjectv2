@@ -1,5 +1,6 @@
 package com.example.miniprojectjava.controller;
 
+import com.example.miniprojectjava.dto.TransactionTypeRequestDTO;
 import com.example.miniprojectjava.entity.TransactionType;
 import com.example.miniprojectjava.service.TransactionTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,13 @@ public class TransactionTypeController {
     public TransactionType getTransactionTypeById(int id) { return transactionTypeService.getTransactionTypeById(id);}
 
     @PostMapping("/createTransactionType")
-    public ResponseEntity<TransactionType> create (@RequestBody TransactionType request) {
-        TransactionType response = request;
+    public ResponseEntity<TransactionTypeRequestDTO> create (@RequestBody TransactionTypeRequestDTO request) {
+        TransactionTypeRequestDTO response = request;
 
-        response = transactionTypeService.createTransactionType(request);
+        TransactionType transactionType = new TransactionType();
+        transactionType.setTypeName(request.getTypeName());
+
+        transactionTypeService.createTransactionType(transactionType);
 
         return ResponseEntity.ok(response);
     }

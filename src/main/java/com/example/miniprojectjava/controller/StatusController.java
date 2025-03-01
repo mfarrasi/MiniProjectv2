@@ -1,7 +1,10 @@
 package com.example.miniprojectjava.controller;
 
+import com.example.miniprojectjava.dto.StatusRequestDTO;
+import com.example.miniprojectjava.entity.Status;
 import com.example.miniprojectjava.entity.TransactionType;
 import com.example.miniprojectjava.entity.User;
+import com.example.miniprojectjava.service.StatusService;
 import com.example.miniprojectjava.service.TransactionTypeService;
 import com.example.miniprojectjava.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,19 +17,22 @@ import java.util.List;
 @RequestMapping("/api/v1/status")
 public class StatusController {
     @Autowired
-    private UserService userService;
+    private StatusService statusService;
 
     @GetMapping
-    public List<User> getAllUser() { return userService.getAllUser();}
+    public List<Status> getAllStatus() { return statusService.getAllStatus();}
 
-    @GetMapping("/getUser")
-    public User getUserById(int id) { return userService.getUserById(id);}
+    @GetMapping("/getStatus")
+    public Status getStatusById(int id) { return statusService.getStatusById(id);}
 
-    @PostMapping("/createUser")
-    public ResponseEntity<User> create (@RequestBody User request) {
-        User response = request;
+    @PostMapping("/createStatus")
+    public ResponseEntity<StatusRequestDTO> create (@RequestBody StatusRequestDTO request) {
+        StatusRequestDTO response = request;
 
-        response = userService.createUser(request);
+        Status status = new Status();
+        status.setStatusName(request.getStatusName());
+
+        statusService.createStatus(status);
 
         return ResponseEntity.ok(response);
     }
